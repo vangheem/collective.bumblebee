@@ -7,7 +7,8 @@ of the bumblebee output transformation framework.
 To configure your rules, edit the IThemeSettings.rules settings
 in the configuration registry.
 
-Read the bumblebee documentation on how to create your rule xml.
+Read the bumblebee documentation at https://github.com/vangheem/Bumblebee
+on how to create your rule xml.
 
 
 It also add an extra condition if-path::
