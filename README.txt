@@ -13,8 +13,8 @@ on how to create your rule xml.
 Extra Selectors
 ---------------
 
-pagetemplate
-~~~~~~~~~~~~
+pt
+~~
 
 Render a page template inline::
 
@@ -51,11 +51,11 @@ or::
 
 
 if-tal
-~~~~~~~~~~~~~
+~~~~~~
 
 Use tal and python expressions for if statement::
 
-    <drop src="#foo" if-tal="here/@@plone_portal_state/is_portal_root" />
+    <drop src="#foo" if-tal="here/@@plone_context_state/is_portal_root" />
 
     <drop src="#foo" if-tal="python: 'foobar' in here.Title()" />
 
