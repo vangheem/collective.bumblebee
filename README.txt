@@ -10,6 +10,36 @@ in the configuration registry.
 Read the bumblebee documentation at https://github.com/vangheem/Bumblebee
 on how to create your rule xml.
 
+Extra Selectors
+---------------
+
+pagetemplate
+~~~~~~~~~~~~
+
+Render a page template inline::
+
+    <after src-pt="" dst="#foo">
+        <h1 tal:content="context/Title" />
+    </after>
+
+
+Available attributes in page templates are: context, here, object, published, request
+
+
+tal
+~~~
+
+    <after src-tal="context/Title" dst="#foo" />
+
+
+Available attributes in tal expressions are: here, object, published, request, folder, portal
+
+
+Extra Conditions
+----------------
+
+if-path
+~~~~~~~
 
 It also add an extra condition if-path::
 
@@ -18,6 +48,21 @@ It also add an extra condition if-path::
 or::
 
     <drop src="#foo" if-not-path="/foo/bar" />
+
+
+if-tal
+~~~~~~~~~~~~~
+
+Use tal and python expressions for if statement::
+
+    <drop src="#foo" if-tal="here/@@plone_portal_state/is_portal_root" />
+
+    <drop src="#foo" if-tal="python: 'foobar' in here.Title()" />
+
+    <drop src="#foo" if-not-tal="python: 'foobar' in here.Title()" />
+
+
+Available attributes in tal expressions are: here, object, published, request, folder, portal
 
 
 Development Tips

@@ -13,11 +13,20 @@ from collective.bumblebee.interfaces import IThemingLayer, IThemeSettings
 from collective.bumblebee.utils import isThemeEnabled, getHost
 from bumblebee.xml import convertRules
 from bumblebee import transform
+from Acquisition import aq_parent
 
 from collective.bumblebee.conditions import IfPath
-from bumblebee.xml import addCondition
-addCondition('path', IfPath)
+from collective.bumblebee.conditions import IfTal
+from collective.bumblebee.selectors import PageTemplateSelector
+from collective.bumblebee.selectors import TalSelector
 
+from bumblebee.xml import addCondition
+from bumblebee.xml import addSelector
+
+addCondition('path', IfPath)
+addCondition('tal', IfTal)
+addSelector('pt', PageTemplateSelector)
+addSelector('tal', TalSelector)
 _rule_cache = {}
 
 
@@ -53,13 +62,11 @@ class ThemeTransform(object):
             if key in _rule_cache:
                 rules = _rule_cache[key]
             else:
-                rules = convertRules(settings.rules,
-                                extras={'request': self.request})
+                rules = convertRules(settings.rules)
                 _rule_cache[key] = rules
             return rules
         else:
-            return convertRules(settings.rules,
-                        extras={'request': self.request})
+            return convertRules(settings.rules)
 
     def getRules(self, settings):
         fromcache = True
@@ -109,4 +116,11 @@ class ThemeTransform(object):
             return result
 
         rules = self.getRules(settings)
-        return transform(result, rules)
+        context = aq_parent(self.published)
+        return transform(result, rules, extras={
+            'request': self.request,
+            'published': self.published,
+            'context': context,
+            'here': context,
+            'object': context
+        })
