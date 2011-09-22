@@ -3,7 +3,7 @@ from zope.component import adapts, queryUtility, getUtility
 
 from plone.registry.interfaces import IRegistry
 from plone.transformchain.interfaces import ITransform
-from Products.CMFCore.interfaces import ISiteRoot
+from zope.app.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
 
 from repoze.xmliter.utils import getHTMLSerializer
@@ -75,7 +75,7 @@ class ThemeTransform(object):
         elif 'b.reload' in self.request:
             key = "%s:%s" % getHost(self.request)
             if key in _rule_cache:
-                portal = getUtility(ISiteRoot)
+                portal = getSite()
                 membership = getToolByName(portal, 'portal_membership')
                 if membership.checkPermission('Manage portal', portal):
                     del _rule_cache[key]
