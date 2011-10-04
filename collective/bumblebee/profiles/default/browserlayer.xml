@@ -1,6 +1,0 @@
-<layers>
-    <layer
-        name="collective.bumblebee"
-        interface="collective.bumblebee.interfaces.IThemingLayer"
-        />
-</layers>
